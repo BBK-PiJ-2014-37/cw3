@@ -8,12 +8,17 @@ public class ReturnObjectImpl implements ReturnObject {
 	private ErrorMessage errorMessage;
 	private Object value;
 
-	public ReturnObjectImpl(ErrorMessage errorMessage, Object value) {
+	public ReturnObjectImpl(ErrorMessage errorMessage) {
 		this.errorMessage = errorMessage;
+		this.value = null;
+	}
+
+	public ReturnObjectImpl(Object value) {
+		this.errorMessage = ErrorMessage.NO_ERROR;
 		this.value = value;
 	}
 
-	/**rr
+	/**
 	 * Returns whether there has been an error
 	 * @return whether there has been an error
 	 */

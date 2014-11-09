@@ -3,29 +3,25 @@ import static org.junit.Assert.*;
 
 public class ReturnObjectImplTest {
 	@Test
-	public void testIsError() {
-		ReturnObjectImpl testObject = new ReturnObjectImpl(ErrorMessage.EMPTY_STRUCTURE, null);
+	public void testHasError() {
+		ReturnObjectImpl testObject = new ReturnObjectImpl(ErrorMessage.EMPTY_STRUCTURE);
 		assertTrue(testObject.hasError());
+		assertNull(testObject.getReturnValue());
 	}
 	
 	@Test
 	public void testGetError() {
-		ReturnObjectImpl testObject = new ReturnObjectImpl(ErrorMessage.EMPTY_STRUCTURE, null);
+		ReturnObjectImpl testObject = new ReturnObjectImpl(ErrorMessage.EMPTY_STRUCTURE);
 		assertEquals(testObject.getError(), ErrorMessage.EMPTY_STRUCTURE);
+		assertNull(testObject.getReturnValue());
 	}
 
 	@Test
-	public void testIsNotError() {
+	public void testNoError() {
 		Integer testInteger = new Integer(42);
-		ReturnObjectImpl testObject = new ReturnObjectImpl(ErrorMessage.NO_ERROR, testInteger);
+		ReturnObjectImpl testObject = new ReturnObjectImpl(testInteger);
 		assertFalse(testObject.hasError());
-	}
-
-	@Test
-	public void testGetReturnValue() {
-		Integer testInteger = new Integer(42);
-		ReturnObjectImpl testObject = new ReturnObjectImpl(ErrorMessage.NO_ERROR, testInteger);
-		assertEquals(testObject.getReturnValue(), testInteger);
+		assertSame(testObject.getReturnValue(), testInteger);
 	}
 
 }
