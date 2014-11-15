@@ -59,7 +59,7 @@ public abstract class ListTest {
 	public void testGetElementFromSingleElementListAtWrongIndex() {
 		List testList = getSingleElementList();
 		ReturnObject ret = testList.get(1);
-		assertFalse(ret.hasError());
+		assertTrue(ret.hasError());
 		assertEquals(ErrorMessage.INDEX_OUT_OF_BOUNDS, ret.getError());	
 	}
 
@@ -216,9 +216,9 @@ public abstract class ListTest {
 
 	private void testRemoveElementWorksAt(List testList, int index) {
 		int oldSize = testList.size();
-		ReturnObject nextObject = null;
+		Object nextObject = null;
 		if (index < oldSize-1) {
-			nextObject = testList.get(index+1);
+			nextObject = testList.get(index+1).getReturnValue();
 		}
 		ReturnObject gotten = testList.get(index);
 		assertFalse(gotten.hasError());
@@ -227,7 +227,7 @@ public abstract class ListTest {
 		assertEquals(oldSize-1, testList.size());
 		assertSame(gotten.getReturnValue(), removed.getReturnValue());
 		ReturnObject after = testList.get(index);
-		assertSame(nextObject.getReturnValue(), after.getReturnValue());
+		assertSame(nextObject, after.getReturnValue());
 	}
 
 	private void testRemoveElementDoesNotWorkAt(List testList, int index) {

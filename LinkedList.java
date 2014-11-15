@@ -4,8 +4,10 @@
  * @author Joel Armando
  */
 public class LinkedList implements List {
-
+	private SingleNode head;
+	
 	public LinkedList() {
+		this.head = null;
 	}
 
 	/**
@@ -14,7 +16,7 @@ public class LinkedList implements List {
 	 * @return true if the list is empty, false otherwise. 
 	 */
 	public boolean isEmpty() {
-		return true;
+		return head == null;
 	}
 
 	/**
@@ -23,7 +25,13 @@ public class LinkedList implements List {
 	 * @return the number of items currently in the list
 	 */
 	public int size() {
-		return 0;
+		int i = 0;
+		SingleNode node = head;
+		while (node != null) {
+			node = node.getNext();
+			i++;
+		}
+		return i;
 	}
 
 	/**
@@ -37,7 +45,23 @@ public class LinkedList implements List {
 	 *         encapsulated in a ReturnObject
 	 */
 	public ReturnObject get(int index) {
-		return new ReturnObjectImpl(ErrorMessage.EMPTY_STRUCTURE);
+		int i = 0;
+		SingleNode node = head;
+
+		if (node == null) {
+			return new ReturnObjectImpl (ErrorMessage.EMPTY_STRUCTURE);
+		}
+		if (index < 0) {
+			return new ReturnObjectImpl (ErrorMessage.INDEX_OUT_OF_BOUNDS);
+		}
+		while (i < index && node != null) {
+			node = node.getNext();
+			i++;		
+		}
+		if (node == null) {
+			return new ReturnObjectImpl (ErrorMessage.INDEX_OUT_OF_BOUNDS);
+		}
+		return new ReturnObjectImpl(node.getValue());
 	}
 
 	/**
@@ -53,7 +77,27 @@ public class LinkedList implements List {
 	 *         encapsulated in a ReturnObject
 	 */
 	public ReturnObject remove(int index){
-		return new ReturnObjectImpl(ErrorMessage.EMPTY_STRUCTURE);
+		if (head == null)
+			return new ReturnObjectImpl(ErrorMessage.EMPTY_STRUCTURE);
+		if (index == 0) {
+			SingleNode oldHead = head;
+			head = head.getNext();
+			oldHead.setNext(null);
+			return new ReturnObjectImpl(oldHead.getValue());
+		}
+		int i = 0;
+		SingleNode node = head;
+		while (i < index-1 && node != null) {
+			node = node.getNext();
+			i++;
+		}
+		if (node != null && node.getNext() != null) {
+			SingleNode oldNode = node.getNext();
+			node.setNext(oldNode.getNext());
+			oldNode.setNext(null);
+			return new ReturnObjectImpl(oldNode.getValue());
+		}
+		return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS);
 	}
 
 	/**
@@ -75,7 +119,29 @@ public class LinkedList implements List {
 	 *         the item added or containing an appropriate error message
 	 */
 	public ReturnObject add(int index, Object item) {
-		return new ReturnObjectImpl(ErrorMessage.EMPTY_STRUCTURE);
+		if (item == null) {
+			return new ReturnObjectImpl(ErrorMessage.INVALID_ARGUMENT);
+		}
+		if (index == 0) {
+			SingleNode oldHead = head;
+			head = new SingleNode(item);
+			head.setNext(oldHead);
+			return new ReturnObjectImpl(item);
+		}
+
+		int i = 0;
+		SingleNode node = head;
+		while (i < index-1 && node != null) {
+			node = node.getNext();
+			i++;
+		}
+		if (node != null) {
+			SingleNode newNode = new SingleNode(item);
+			newNode.setNext(node.getNext());
+			node.setNext(newNode);
+			return new ReturnObjectImpl(item);
+		}
+		return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS);
 	}
 
 	/**
@@ -90,6 +156,6 @@ public class LinkedList implements List {
 	 *         the item added or containing an appropriate error message
 	 */
 	public ReturnObject add(Object item) {
-		return new ReturnObjectImpl(ErrorMessage.EMPTY_STRUCTURE);
+		return this.add(this.size(), item);
 	}
 }
