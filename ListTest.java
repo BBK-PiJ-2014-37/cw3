@@ -79,7 +79,7 @@ public abstract class ListTest {
     	int oldSize = testList.size();
     	Object obj = new Object();
     	ReturnObject ret = testList.add(index, obj);
-    	assertFalse(ret.hasError());
+    	assertEquals(ErrorMessage.NO_ERROR, ret.getError());
     	assertSame(obj, ret.getReturnValue());
     	assertEquals(oldSize+1, testList.size());
     	ret = testList.get(index);
