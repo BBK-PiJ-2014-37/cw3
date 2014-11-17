@@ -109,8 +109,15 @@ public class ArrayList implements List {
 			return new ReturnObjectImpl (ErrorMessage.INDEX_OUT_OF_BOUNDS);
 		}
 		if (this.length == array.length) {
-			return new ReturnObjectImpl (ErrorMessage.INDEX_OUT_OF_BOUNDS);
+			Object newArray[] = new Object[array.length * 2];
+			int i = 0;
+			while (i < this.length) {
+				newArray[i] = array[i];
+				i++;
+			}
+			array = newArray;
 		}
+
 		int i = this.size();
 		while (i > index) {
 			this.array[i] = this.array[i-1]; 
