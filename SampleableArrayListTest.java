@@ -18,8 +18,8 @@ public class SampleableArrayListTest extends ListTest {
 		assertFalse(sampleableList.add(new Integer(5)).hasError());
 		assertFalse(sampleableList.add(new Integer(6)).hasError());
 		SampleableArrayList newSampleableList =  sampleableList.sample();
-		assertEquals(1, newSampleableList.get(0));
-		assertEquals(3, newSampleableList.get(2));
-		assertEquals(5, newSampleableList.get(4));
+		assertEquals(1, newSampleableList.get(0).getReturnValue());
+		assertEquals(3, newSampleableList.get(1).getReturnValue());
+		assertEquals(5, newSampleableList.get(2).getReturnValue());
 	}
 }
