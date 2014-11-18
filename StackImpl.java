@@ -21,7 +21,7 @@ public class StackImpl extends AbstractStack implements Stack {
 	 * @return true if the stack is empty, false otherwise. 
 	 */
 	public boolean isEmpty() {
-		return true;
+		return internalList.isEmpty();
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class StackImpl extends AbstractStack implements Stack {
 	 * @return the number of items currently in the stack
 	 */
 	public int size() {
-		return 0;
+		return internalList.size();
 	}
 
 	/**
@@ -39,6 +39,7 @@ public class StackImpl extends AbstractStack implements Stack {
 	 * @param item the new item to be added
 	 */
 	public void push(Object item) {
+		internalList.add(0, item);
 	}
 
 	/**
@@ -49,7 +50,7 @@ public class StackImpl extends AbstractStack implements Stack {
 	 *         stack is empty, an appropriate error.
 	 */
 	public ReturnObject top() {
-		return new ReturnObjectImpl(new Integer(8));
+		return internalList.get(0);
 	}
 
 	/**
@@ -60,7 +61,7 @@ public class StackImpl extends AbstractStack implements Stack {
 	 *         stack is empty, an appropriate error.
 	 */
 	public ReturnObject pop() {
-		return new ReturnObjectImpl(new Integer(8));
+		return internalList.remove(0);
 	}
 }
 
