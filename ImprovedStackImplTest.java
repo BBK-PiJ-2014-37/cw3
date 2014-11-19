@@ -22,7 +22,6 @@ public class ImprovedStackImplTest extends StackTest {
 		assertEquals(3, oldStack.pop().getReturnValue());
 		assertEquals(2, oldStack.pop().getReturnValue());
 		assertEquals(1, oldStack.pop().getReturnValue());
-
 	}
 
 	@Test
